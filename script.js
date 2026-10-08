@@ -3,7 +3,7 @@ import * as TWEEN from '@tweenjs/tween.js';
 import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
 import { CSS3DRenderer, CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
 
-// Format: Symbol, Name, Atomic Weight, Column (X), Row (Y)
+
 const table = [
     "H", "Hydrogen", "1.00794", 1, 1,
 				"He", "Helium", "4.002602", 18, 1,
@@ -137,7 +137,7 @@ function init() {
     camera.position.z = 3000;
     scene = new THREE.Scene();
 
-    // 1. Build the HTML Elements into CSS3D Objects
+    
     for ( let i = 0; i < table.length; i += 5 ) {
         const element = document.createElement( 'div' );
         element.className = 'element';
@@ -159,21 +159,21 @@ function init() {
         element.appendChild( details );
 
         const objectCSS = new CSS3DObject( element );
-        // Random starting position
+       
         objectCSS.position.x = Math.random() * 4000 - 2000;
         objectCSS.position.y = Math.random() * 4000 - 2000;
         objectCSS.position.z = Math.random() * 4000 - 2000;
         scene.add( objectCSS );
         objects.push( objectCSS );
 
-        // Table Target Positions
+       
         const object = new THREE.Object3D();
         object.position.x = ( table[ i + 3 ] * 140 ) - 1330;
         object.position.y = - ( table[ i + 4 ] * 180 ) + 990;
         targets.table.push( object );
     }
 
-    // 2. Calculate Sphere Targets
+ 
     const vector = new THREE.Vector3();
     for ( let i = 0, l = objects.length; i < l; i ++ ) {
         const phi = Math.acos( - 1 + ( 2 * i ) / l );
@@ -185,7 +185,7 @@ function init() {
         targets.sphere.push( object );
     }
 
-    // 3. Calculate Helix Targets
+  
     for ( let i = 0, l = objects.length; i < l; i ++ ) {
         const theta = i * 0.175 + Math.PI;
         const y = - ( i * 8 ) + 450;
@@ -198,7 +198,7 @@ function init() {
         targets.helix.push( object );
     }
 
-    // 4. Calculate Grid Targets
+   
     for ( let i = 0; i < objects.length; i ++ ) {
         const object = new THREE.Object3D();
         object.position.x = ( ( i % 5 ) * 400 ) - 800;
@@ -207,7 +207,7 @@ function init() {
         targets.grid.push( object );
     }
 
-    // 5. Setup Renderer & Controls
+  
     renderer = new CSS3DRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.getElementById( 'container' ).appendChild( renderer.domElement );
@@ -217,13 +217,13 @@ function init() {
     controls.maxDistance = 6000;
     controls.addEventListener( 'change', render );
 
-    // 6. Bind Buttons
+    
     document.getElementById( 'table' ).addEventListener( 'click', () => transform( targets.table, 2000 ) );
     document.getElementById( 'sphere' ).addEventListener( 'click', () => transform( targets.sphere, 2000 ) );
     document.getElementById( 'helix' ).addEventListener( 'click', () => transform( targets.helix, 2000 ) );
     document.getElementById( 'grid' ).addEventListener( 'click', () => transform( targets.grid, 2000 ) );
 
-    // Start with Table layout
+    
     transform( targets.table, 2000 );
     window.addEventListener( 'resize', onWindowResize );
 }
